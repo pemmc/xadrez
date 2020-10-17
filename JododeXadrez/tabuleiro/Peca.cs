@@ -2,7 +2,8 @@
 
 namespace JododeXadrez.tabuleiro
 {
-    public class Peca
+    //em razao do metodo abaixo ter que ser abstrato, esta classe tb mudou para abstrata
+    public abstract class Peca
     {
 
         public Posicao posicao { get; set; }
@@ -27,6 +28,11 @@ namespace JododeXadrez.tabuleiro
 
         }
 
+        //nao pode ser implementada aqui nesta classe por isso abstrata o metodo e esta classe tb tem que ser abstrata
+        //operacao que toda a classe de cada peca tera que ter dentro de cada peca especifica
+        public abstract bool[,] movimentosPossiveis();
 
+
+         
     }
 }

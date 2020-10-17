@@ -18,17 +18,20 @@ namespace JododeXadrez
                 {
 
                     Console.Clear();
-
                     Tela.imprimirTabuleiro(partida.tab);
-
                     Console.WriteLine();
 
                     Console.WriteLine("Origem: ");
-
                     Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
 
-                    Console.WriteLine("Destino: ");
+                    //Agora limpa a tela e imprimo com as posições marcadas
+                    bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
+                    
+                    Console.Clear();
+                    Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
 
+                    Console.WriteLine();
+                    Console.WriteLine("Destino: ");
                     Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
 
                     partida.executaMovimento(origem, destino);
