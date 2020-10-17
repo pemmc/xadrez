@@ -20,6 +20,13 @@ namespace JododeXadrez.tabuleiro
 
         }
 
+        public void incrementarQteMovimentos()
+        {
+
+            this.qteMovimentos++;
+
+        }
+
 
     }
 }
