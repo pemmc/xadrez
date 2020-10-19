@@ -16,27 +16,44 @@ namespace JododeXadrez
 
                 while (! partida.terminada)
                 {
+                    try
+                    {
+                        Console.Clear();
+                        Tela.imprimirTabuleiro(partida.tab);
+                        Console.WriteLine();
+                        Console.WriteLine("Turno: " + partida.turno);
+                        Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
 
-                    Console.Clear();
-                    Tela.imprimirTabuleiro(partida.tab);
-                    Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
 
-                    Console.WriteLine("Origem: ");
-                    Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                        Console.WriteLine("Origem: ");
+                        Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
 
-                    //Agora limpa a tela e imprimo com as posições marcadas
-                    bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
-                    
-                    Console.Clear();
-                    Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
+                        partida.validarPosicaoOrigem(origem);
 
-                    Console.WriteLine();
-                    Console.WriteLine("Destino: ");
-                    Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+                        //Agora limpa a tela e imprimo com as posições marcadas
+                        bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
 
-                    partida.executaMovimento(origem, destino);
+                        Console.Clear();
+                        Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
+
+                        Console.WriteLine();
+                        Console.WriteLine("Destino: ");
+                        Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+
+                        partida.validarPosicaoDestino(origem, destino);
+
+                        partida.realizaJogada(origem, destino);
 
 
+                    }
+                    catch(TabuleiroException e)
+                    {
+                        Console.WriteLine("Error Tabuleiro: " + e.Message);
+                        Console.ReadLine();
+
+                    }
                 }
 
 
@@ -47,6 +64,7 @@ namespace JododeXadrez
             {
 
                 Console.WriteLine("Error Tabuleiro: " + e.Message);
+                
 
             }
         }

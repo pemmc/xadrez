@@ -28,6 +28,37 @@ namespace JododeXadrez.tabuleiro
 
         }
 
+        public bool existemMovimentosPossiveis()
+        {
+
+            bool[,] mat = movimentosPossiveis();
+
+            for (int i = 0; i < tab.linhas; i++)
+            {
+                for (int j = 0; j < tab.colunas; j++)
+                {
+                    if(mat[i,j])
+                    {
+                        return true;
+
+
+                    }
+
+                }
+
+            }
+
+            return false;
+
+        }
+
+        public bool podeMoverPara(Posicao pos)
+        {
+
+            return movimentosPossiveis()[pos.linha, pos.coluna];
+
+        }
+
         //nao pode ser implementada aqui nesta classe por isso abstrata o metodo e esta classe tb tem que ser abstrata
         //operacao que toda a classe de cada peca tera que ter dentro de cada peca especifica
         public abstract bool[,] movimentosPossiveis();
