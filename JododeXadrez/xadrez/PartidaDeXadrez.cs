@@ -66,11 +66,19 @@ namespace JododeXadrez.xadrez
                 xeque = false;
 
             }
-            
-            turno++;
 
-            mudaJogador();
+            if (estaEmXequeMate(adversaria(jogadorAtual)))
+            {
+                terminada = true;
 
+            }
+            else
+            {
+                turno++;
+
+                mudaJogador();
+
+            }
         }
 
         public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
@@ -239,6 +247,49 @@ namespace JododeXadrez.xadrez
             return false;
         }
 
+        public bool estaEmXequeMate(Cor cor)
+        {
+            if(!estaEmXeque(cor))
+            {
+                return false;
+            }
+
+            foreach(Peca x in pecasEmJogo(cor))
+            {
+                bool[,] mat = x.movimentosPossiveis();
+
+                for (int i=0; i<tab.linhas; i++)
+                {
+                    for (int j = 0; j < tab.linhas; j++)
+                    {
+                        if(mat[i,j])
+                        {
+                            Posicao origem = x.posicao;
+                            Posicao destino = new Posicao(i, j);
+
+                            Peca pecaCapturada = executaMovimento(x.posicao, new Posicao(i, j));
+
+                            bool testeXeque = estaEmXeque(cor);
+
+                            desfazMovimento(origem, destino, pecaCapturada);
+
+                            if (!testeXeque)
+                            {
+                                return false;
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            return true;
+        }
+
         public void colocarNovaPeca(Peca peca, char coluna, int linha)
         {
 
@@ -250,6 +301,7 @@ namespace JododeXadrez.xadrez
 
         private void colocarPecas()
         {
+            /*Padrão inicial
 
             colocarNovaPeca(new Torre(tab, Cor.Branca), 'c', 1);
 
@@ -267,7 +319,16 @@ namespace JododeXadrez.xadrez
             colocarNovaPeca(new Torre(tab, Cor.Amarela), 'e', 8);
 
             colocarNovaPeca(new Rei(tab, Cor.Amarela), 'd', 8);
-            
+            */
+
+            //Padrão cheque-mate
+            colocarNovaPeca(new Torre(tab, Cor.Branca), 'c', 1);
+            colocarNovaPeca(new Rei(tab, Cor.Branca), 'd', 1);
+            colocarNovaPeca(new Torre(tab, Cor.Branca), 'h', 7);
+
+            colocarNovaPeca(new Rei(tab, Cor.Amarela), 'a', 8);
+            colocarNovaPeca(new Torre(tab, Cor.Amarela), 'b', 8);
+
         }
 
 
