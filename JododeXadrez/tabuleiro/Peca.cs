@@ -28,6 +28,13 @@ namespace JododeXadrez.tabuleiro
 
         }
 
+        public void decrincrementarQteMovimentos()
+        {
+
+            this.qteMovimentos--;
+
+        }
+
         public bool existemMovimentosPossiveis()
         {
 
